@@ -34,35 +34,30 @@ public class TypeService : ITypeService
 
     public async Task<TypeResponseDto> CreateTypeAsync(CancellationToken token, TypeRequestDto dto)
     {
-        try
+
+        var typeObj = new Type()
         {
-            var typeObj = new Type()
-            {
-                Name = dto.Name
-            };
+            Name = dto.Name
+        };
 
-            if (typeObj.Equals(null) || string.IsNullOrEmpty(typeObj.Name))
-            {
-                throw new ArgumentException("Type can not be null or the Name be empty or null");
-            }
-
-            if (await _typeRepository.IsTypeAlreadyPresentAsync(token, typeObj))
-            {
-                throw new ArgumentException("Type with name " + typeObj.Name + " already exists");
-            }
-
-            var result = await _typeRepository.CreateTypeAsync(token, typeObj);
-
-
-            return new TypeResponseDto()
-            {
-                Name = result.Name
-            };
-        }
-        catch (Exception ex)
+        if (typeObj.Equals(null) || string.IsNullOrEmpty(typeObj.Name))
         {
-            throw new ArgumentException(ex.Message);
+            throw new ArgumentException("Type can not be null or the Name be empty or null");
         }
+
+        if (await _typeRepository.IsTypeAlreadyPresentAsync(token, typeObj))
+        {
+            throw new ArgumentException("Type with name " + typeObj.Name + " already exists");
+        }
+
+        var result = await _typeRepository.CreateTypeAsync(token, typeObj);
+
+
+        return new TypeResponseDto()
+        { 
+            Name = result.Name
+        };
+
     }
 
     public async Task<bool> RemoveTypeAsync(CancellationToken token, string name)

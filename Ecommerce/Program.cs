@@ -18,8 +18,10 @@ var connectionString = baseConnection!.Replace("PASSWORD", password);
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<ITypeService, TypeService>();
+builder.Services.AddScoped<IStatusService, StatusService>();
 
 builder.Services.AddScoped<ITypeRepository, TypeRepository>();
+builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 
 builder.Services.AddDbContext<EcommerceDbContext>(options =>
     options.UseNpgsql(connectionString));
