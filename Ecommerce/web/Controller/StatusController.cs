@@ -18,7 +18,7 @@ public class StatusController : ControllerBase
     }
 
     [HttpGet("")]
-    public async Task<ActionResult<IEnumerable<StatusResponseDto>>> GetStatusesAsync(CancellationToken token)
+    public async Task<ActionResult<IQueryable<StatusResponseDto>>> GetStatusesAsync(CancellationToken token)
     {
         try
         {

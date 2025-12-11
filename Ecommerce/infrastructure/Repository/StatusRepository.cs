@@ -51,4 +51,24 @@ public class StatusRepository : IStatusRepository
         _dbContext.Statuses.Remove(foundObj);
         return await _dbContext.SaveChangesAsync(token);
     }
+    
+    public async Task<Status> GetStatusByIdAsync(CancellationToken token, int id)
+    {
+        var status =
+            await _dbContext.Statuses
+                .Where(s => s.Id == id)
+                .FirstOrDefaultAsync(token);
+
+        return status;
+    }
+
+    public async Task<Status> GetStatusByNameAsync(CancellationToken token, string name)
+    {
+        var status =
+            await _dbContext.Statuses
+                .Where(s => s.Name == name)
+                .FirstOrDefaultAsync(token);
+
+        return status;
+    }
 }

@@ -70,4 +70,24 @@ public class TypeRepository : ITypeRepository
 
         return await _dbContext.SaveChangesAsync(token);
     }
+
+    public async Task<Type> GetTypeByIdAsync(CancellationToken token, int id)
+    {
+        var type =
+            await _dbContext.Types
+                .Where(t => t.Id == id)
+                .FirstOrDefaultAsync(token);
+
+        return type;
+    }
+
+    public async Task<Type> GetTypeByNameAsync(CancellationToken token, string name)
+    {
+        var type =
+            await _dbContext.Types
+                .Where(t => t.Name == name)
+                .FirstOrDefaultAsync(token);
+
+        return type;
+    }
 }
